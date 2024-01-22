@@ -1,0 +1,60 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор клеток крови</title>
+    <style>
+        body {
+            background-image: url('/static/images/1.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            color: #3498db;
+        }
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .image-container img {
+            max-width: 300px;
+            max-height: 300px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Добро пожаловать!</h1>
+    <p>Этот сервис предоставляет возможность подсчета ретикулоцитов на цифровом снимке.</p>
+
+    <h2>Инструкции:</h2>
+    <p>1. Загрузите фотографию.</p>
+    <p>2. Нажмите кнопку "Подсчитать клетки".</p>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept=".jpg, .jpeg, .png" required>
+        <br>
+        <input type="submit" value="Подсчитать клетки">
+    </form>
+
+    {% if result %}
+        <h2>Результаты подсчета:</h2>
+        <p>Количество клеток: {{ result }}</p>
+    {% endif %}
+
+    <div class="image-container">
+        {% if original_image %}
+            <h2>Исходное изображение:</h2>
+            <img src="{{ url_for('static', filename=original_image) }}?{{ random }}" alt="Original Image">
+        {% endif %}
+
+        {% if processed_image %}
+            <h2>Обработанное изображение:</h2>
+            <img src="{{ url_for('static', filename=processed_image) }}?{{ random }}" alt="Processed Image">
+        {% endif %}
+    </div>
+</body>
+</html>
+
